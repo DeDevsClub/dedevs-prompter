@@ -52,4 +52,26 @@ export const metadata = {
       "Enhance your prompting with AI",
     "twitter:card": "summary_large_image",
   },
+  openGraph: {
+    type: "website",
+    title: "DeDevs Prompter",
+    description: "Enhance your prompting with AI",
+    url: defaultUrl,
+    siteName: "DeDevs Prompter",
+    images: [
+      {
+        url: `${defaultUrl}/opengraph-image.png`, 
+        width: 1200,
+        height: 630,
+        alt: "DeDevs Prompter Logo"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DeDevs Prompter",
+    description: "Enhance your prompting with AI",
+    images: [`${defaultUrl}/opengraph-image.png`], 
+    creator: "@DeDevsClub" 
+  }
 }
