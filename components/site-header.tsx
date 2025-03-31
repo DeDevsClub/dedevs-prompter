@@ -31,7 +31,7 @@ export function SiteHeader() {
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-200",
-        isScrolled ? "bg-gray-950/90 backdrop-blur-md border-b shadow-sm" : "bg-gray-950 border-b border-transparent",
+        isScrolled ? "bg-gray-950/90 backdrop-blur-md border-b shadow-xs" : "bg-gray-950 border-b border-transparent",
       )}
     >
       <div className="container flex h-16 items-center justify-between">

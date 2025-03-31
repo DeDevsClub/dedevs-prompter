@@ -178,7 +178,7 @@ function PrincipleCard({
             <Badge
               key={index}
               variant={activeExampleIndex === index ? "default" : "outline"}
-              className="cursor-pointer"
+              className="cursor-pointer text-[var(--secondary)]"
               onClick={() => onLoadExample(index)}
             >
               Example {index + 1}
@@ -195,7 +195,7 @@ function PrincipleCard({
               placeholder="Enter your prompt here..."
               className="min-h-[120px]"
             />
-            <Button onClick={onApplyPrinciple} className="w-full" disabled={!userPrompt.trim()}>
+            <Button onClick={onApplyPrinciple} className="w-full text-[var(--secondary)]" disabled={!userPrompt.trim()}>
               <Sparkles className="mr-2 h-4 w-4" />
               Apply {principle.title}
             </Button>

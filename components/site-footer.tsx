@@ -22,7 +22,7 @@ export function SiteFooter() {
             rel="noopener noreferrer"
             className={cn(
               "font-medium transition-colors",
-              "bg-clip-text text-transparent bg-gradient-to-r from-dedevs-pink to-dedevs-cyan",
+              "bg-clip-text text-transparent bg-linear-to-r from-dedevs-pink to-dedevs-cyan",
               "hover:from-dedevs-pink-light hover:to-dedevs-cyan-light",
             )}
           >

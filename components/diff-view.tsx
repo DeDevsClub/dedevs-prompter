@@ -26,7 +26,7 @@ export function DiffView({ original, enhanced }: DiffViewProps) {
           // Added text (in enhanced but not in original)
           if (part.added) {
             return (
-              <span key={index} className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+              <span key={index} className="bg-green-100 dark:bg-green-900/30 text-black">
                 {part.value}
               </span>
             )

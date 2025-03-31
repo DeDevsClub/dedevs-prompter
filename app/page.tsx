@@ -572,7 +572,7 @@ IMPORTANT: Return ONLY the JSON object. Do not include any explanation text, mar
                           </p>
                           <ul className="text-sm list-disc pl-5 space-y-1">
                             <li>
-                              <span className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-1 rounded">
+                              <span className="bg-green-100 dark:bg-green-900/30 text-black px-1 rounded">
                                 Green
                               </span>{" "}
                               text shows additions

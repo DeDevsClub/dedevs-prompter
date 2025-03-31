@@ -20,7 +20,7 @@ export default function HeaderDemo() {
               <span className="mt-2 text-sm font-mono">#00d3f9</span>
             </div>
             <div className="flex flex-col items-center">
-              <div className="w-20 h-20 rounded-md bg-gradient-to-r from-dedevs-pink to-dedevs-cyan"></div>
+              <div className="w-20 h-20 rounded-md bg-linear-to-r from-dedevs-pink to-dedevs-cyan"></div>
               <span className="mt-2 text-sm font-mono">Gradient</span>
             </div>
           </div>
