@@ -213,10 +213,10 @@ export function ApiKeyManager({ onApiKeyChange, onSaveSuccess }: ApiKeyManagerPr
       </CardContent>
 
       <CardFooter className="flex justify-between pt-0">
-        <Button variant="outline" onClick={clearApiKey} disabled={!apiKey} size="sm">
+        <Button variant="outline" onClick={clearApiKey} disabled={!apiKey} size="sm" className="text-[var(--secondary)]">
           Clear
         </Button>
-        <Button onClick={saveApiKey} disabled={!apiKey || isSaved} size="sm">
+        <Button onClick={saveApiKey} disabled={!apiKey || isSaved} size="sm" className="text-[var(--secondary)]">
           {isSaved ? "Update" : "Save"}
         </Button>
       </CardFooter>

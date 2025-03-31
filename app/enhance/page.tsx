@@ -277,7 +277,7 @@ export default function EnhancePage() {
                 <Button variant="outline" onClick={() => setOriginalPrompt("")} disabled={!originalPrompt.trim()}>
                   Clear
                 </Button>
-                <Button onClick={enhancePrompt} disabled={isEnhancing || !originalPrompt.trim()}>
+                <Button onClick={enhancePrompt} disabled={isEnhancing || !originalPrompt.trim()} className="text-[var(--secondary)]">
                   {isEnhancing ? (
                     <>
                       <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
@@ -307,10 +307,10 @@ export default function EnhancePage() {
                 />
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Button variant="outline" onClick={() => copyToClipboard(enhancedPrompt)} disabled={!enhancedPrompt}>
+                <Button variant="outline" onClick={() => copyToClipboard(enhancedPrompt)} disabled={!enhancedPrompt} className="text-[var(--secondary)]">
                   Copy
                 </Button>
-                <Button onClick={iterativeEnhance} disabled={!enhancedPrompt}>
+                <Button onClick={iterativeEnhance} disabled={!enhancedPrompt} className="text-[var(--secondary)]">
                   <ArrowRight className="mr-2 h-4 w-4" />
                   Refine Further
                 </Button>
