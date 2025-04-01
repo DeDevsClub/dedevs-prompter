@@ -28,9 +28,7 @@ export default function RootLayout({
 
 
 import './globals.css'
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://prompt.dedevs.com`
-  : "http://localhost:3000"
+const defaultUrl = `https://prompt.dedevs.com`
 export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "DeDevs Prompter",
@@ -42,7 +40,7 @@ export const metadata = {
     "@context": "http://schema.org",
     "@type": "WebSite",
     name: "DeDevs Prompter",
-    url: "https://prompt.dedevs.com/",
+    url: defaultUrl,
     description:
       "Enhance your prompting with AI",
   },
@@ -60,7 +58,7 @@ export const metadata = {
     siteName: "DeDevs Prompter",
     images: [
       {
-        url: `${defaultUrl}/opengraph-image.png`, 
+        url: `${defaultUrl}/images/opengraph-image.png`,
         width: 1200,
         height: 630,
         alt: "DeDevs Prompter Logo"
@@ -71,7 +69,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "DeDevs Prompter",
     description: "Enhance your prompting with AI",
-    images: [`${defaultUrl}/opengraph-image.png`], 
-    creator: "@DeDevsClub" 
+    images: [`${defaultUrl}/images/opengraph-image.png`],
+    creator: "@DeDevsClub"
   }
 }
