@@ -58,7 +58,7 @@ export const metadata = {
     siteName: "DeDevs Prompter",
     images: [
       {
-        url: `${defaultUrl}/images/opengraph-image.png`,
+        url: `${defaultUrl}/opengraph-image.png`,
         width: 1200,
         height: 630,
         alt: "DeDevs Prompter Logo"
@@ -69,7 +69,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "DeDevs Prompter",
     description: "Enhance your prompting with AI",
-    images: [`${defaultUrl}/images/opengraph-image.png`],
+    images: [`${defaultUrl}/opengraph-image.png`],
     creator: "@DeDevsClub"
   }
 }
