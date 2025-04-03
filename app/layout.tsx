@@ -28,7 +28,7 @@ export default function RootLayout({
 
 
 import './globals.css'
-const defaultUrl = `https://prompt.dedevs.com`
+const defaultUrl = `https://prompt.dedevs.club`
 export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "DeDevs Prompter",
