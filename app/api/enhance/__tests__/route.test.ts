@@ -29,12 +29,17 @@ describe('/api/enhance POST', () => {
   });
 
   it('should return enhanced text for a valid request', async () => {
-    const mockEnhancedText = 'This is the enhanced text.';
+    const actualEnhancedText = 'This is the actual enhanced prompt text.';
+    const mockAiJsonResponse = JSON.stringify({
+      enhancedPrompt: actualEnhancedText,
+      notes: ['Some note about the enhancement.']
+    });
+
     mockCreateCompletion.mockResolvedValueOnce({
       choices: [
         {
           message: {
-            content: mockEnhancedText,
+            content: mockAiJsonResponse, // OpenAI returns a stringified JSON
           },
         },
       ],
@@ -51,7 +56,7 @@ describe('/api/enhance POST', () => {
     const data = await response.json();
 
     expect(response.status).toBe(200);
-    expect(data).toEqual({ enhancedText: mockEnhancedText });
+    expect(data).toEqual({ enhancedText: actualEnhancedText }); // Expecting the extracted text
     expect(OpenAI).toHaveBeenCalledWith({ apiKey: 'test-api-key' });
     expect(mockCreateCompletion).toHaveBeenCalledWith({
       model: 'gpt-4o',
@@ -140,7 +145,7 @@ describe('/api/enhance POST', () => {
     mockCreateCompletion.mockResolvedValueOnce({
       choices: [
         {
-          message: { content: null }, // Simulate no content
+          message: { content: null }, // Simulate no content from AI
         },
       ],
     });
@@ -155,7 +160,7 @@ describe('/api/enhance POST', () => {
     const data = await response.json();
 
     expect(response.status).toBe(500);
-    expect(data).toEqual({ error: 'Failed to enhance text using OpenAI' });
+    expect(data).toEqual({ error: 'Failed to get content from OpenAI' }); // Updated error message
   });
 
   it('should handle malformed JSON in request (simulated by req.json() rejecting)', async () => {
@@ -225,4 +230,88 @@ describe('/api/enhance POST', () => {
       details: { error: { message: 'Rate limit exceeded' } },
     });
   });
+
+  it('should return 500 if AI response is not valid JSON', async () => {
+    mockCreateCompletion.mockResolvedValueOnce({
+      choices: [
+        {
+          message: {
+            content: 'This is not JSON, but just a plain string.', // AI returns non-JSON
+          },
+        },
+      ],
+    });
+
+    const req = httpMocks.createRequest<NextRequest>({
+      method: 'POST',
+      url: '/api/enhance',
+      json: () => Promise.resolve({ text: ORIGINAL_TEXT, apiKey: 'test-api-key' }),
+    });
+
+    const response = await POST(req as NextRequest);
+    const data = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(data.error).toBe('OpenAI returned an unexpected response format.');
+    expect(data.details).toBe("Expected JSON with 'enhancedPrompt' field.");
+  });
+
+  it("should return 500 if AI's JSON response is missing 'enhancedPrompt' field", async () => {
+    const mockAiJsonResponseMissingField = JSON.stringify({
+      // enhancedPrompt is missing
+      notes: ['Some note about the enhancement.']
+    });
+
+    mockCreateCompletion.mockResolvedValueOnce({
+      choices: [
+        {
+          message: {
+            content: mockAiJsonResponseMissingField,
+          },
+        },
+      ],
+    });
+
+    const req = httpMocks.createRequest<NextRequest>({
+      method: 'POST',
+      url: '/api/enhance',
+      json: () => Promise.resolve({ text: ORIGINAL_TEXT, apiKey: 'test-api-key' }),
+    });
+
+    const response = await POST(req as NextRequest);
+    const data = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(data.error).toBe("OpenAI response did not contain a valid 'enhancedPrompt' string field");
+  });
+
+  it("should return 500 if AI's 'enhancedPrompt' field is not a string", async () => {
+    const mockAiJsonResponseWrongType = JSON.stringify({
+      enhancedPrompt: 12345, // Not a string
+      notes: ['Some note about the enhancement.']
+    });
+
+    mockCreateCompletion.mockResolvedValueOnce({
+      choices: [
+        {
+          message: {
+            content: mockAiJsonResponseWrongType,
+          },
+        },
+      ],
+    });
+
+    const req = httpMocks.createRequest<NextRequest>({
+      method: 'POST',
+      url: '/api/enhance',
+      json: () => Promise.resolve({ text: ORIGINAL_TEXT, apiKey: 'test-api-key' }),
+    });
+
+    const response = await POST(req as NextRequest);
+    const data = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(data.error).toBe("OpenAI response did not contain a valid 'enhancedPrompt' string field");
+  });
+
 });

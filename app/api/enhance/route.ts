@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     // You should customize this part to match the enhancement logic in your app/enhance/page.tsx
     // or other relevant parts of your frontend.
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o', // Consider making this configurable
+      model: 'gpt-4o',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: `${text}` },
@@ -44,13 +44,31 @@ export async function POST(req: NextRequest) {
       // Add other parameters like temperature, max_tokens as needed
     });
 
-    const enhancedText = completion.choices[0]?.message?.content?.trim();
+    const aiResponseContent = completion.choices[0]?.message?.content?.trim();
 
-    if (!enhancedText) {
-      return NextResponse.json({ error: 'Failed to enhance text using OpenAI' }, { status: 500 });
+    if (!aiResponseContent) {
+      return NextResponse.json({ error: 'Failed to get content from OpenAI' }, { status: 500 });
     }
 
-    return NextResponse.json({ enhancedText });
+    try {
+      const parsedAiResponse = JSON.parse(aiResponseContent);
+      const actualEnhancedPrompt = parsedAiResponse.enhancedPrompt;
+
+      if (typeof actualEnhancedPrompt === 'string') {
+        return NextResponse.json({ enhancedText: actualEnhancedPrompt.trim() });
+      } else {
+        console.error("OpenAI response's 'enhancedPrompt' field was not a string or was missing:", parsedAiResponse);
+        return NextResponse.json({ error: "OpenAI response did not contain a valid 'enhancedPrompt' string field" }, { status: 500 });
+      }
+    } catch (parseError) {
+      // This catch block handles errors if aiResponseContent is not valid JSON.
+      // This might happen if the AI, despite the system prompt, doesn't return JSON.
+      // In this specific case, the SYSTEM_PROMPT asks for JSON with 'enhancedPrompt' and 'notes'.
+      // If we don't get that, it's an unexpected format.
+      console.error("Failed to parse AI's JSON response or 'enhancedPrompt' was invalid:", parseError);
+      console.error("AI raw response content:", aiResponseContent);
+      return NextResponse.json({ error: "OpenAI returned an unexpected response format.", details: "Expected JSON with 'enhancedPrompt' field." }, { status: 500 });
+    }
 
   } catch (error: any) {
     console.error('API Error in /api/enhance:', error);
