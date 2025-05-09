@@ -126,8 +126,8 @@ export function EnhancementSettings() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="gpt-4o">GPT-4o</SelectItem>
-              <SelectItem value="gpt-4">GPT-4</SelectItem>
-              <SelectItem value="gpt-3.5">GPT-3.5</SelectItem>
+              {/* <SelectItem value="gpt-4">GPT-4</SelectItem> */}
+              {/* <SelectItem value="gpt-3.5">GPT-3.5</SelectItem> */}
               <SelectItem value="claude-3">Claude 3</SelectItem>
               <SelectItem value="llama-3">Llama 3</SelectItem>
             </SelectContent>

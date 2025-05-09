@@ -14,6 +14,7 @@ import { decryptData } from "@/lib/encryption"
 import { PromptHistoryItem } from "@/components/prompt-history-item"
 import { PromptTips } from "@/components/prompt-tips"
 import { DiffView } from "@/components/diff-view"
+import { SYSTEM_PROMPT } from "@/lib/constants"
 
 export default function EnhancePage() {
   const [originalPrompt, setOriginalPrompt] = useState("")
@@ -97,7 +98,7 @@ export default function EnhancePage() {
     setIsEnhancing(true)
     setEnhancedPrompt("")
     setEnhancementNotes([])
-
+   
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -110,23 +111,7 @@ export default function EnhancePage() {
           messages: [
             {
               role: "system",
-              content: `You are a prompt engineering expert. Analyze the user's prompt and provide an enhanced version that will produce better results.
-              
-              Return your response in the following JSON format:
-              {
-                "enhancedPrompt": "The improved prompt text",
-                "notes": ["Note 1 about what was improved", "Note 2 about what was improved", ...]
-              }
-              
-              Focus on making these improvements:
-              1. Add more specificity and detail
-              2. Clarify ambiguous instructions
-              3. Improve structure and organization
-              4. Add constraints and requirements
-              5. Specify the desired format and style
-              6. Remove unnecessary words or redundancies
-              
-              Your response must be valid JSON.`,
+              content: SYSTEM_PROMPT,
             },
             {
               role: "user",
@@ -143,7 +128,7 @@ export default function EnhancePage() {
 
       const data = await response.json()
       const content = data.choices[0].message.content
-
+      
       // Parse the JSON response
       try {
         const parsedResponse = JSON.parse(content)

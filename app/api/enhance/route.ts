@@ -1,3 +1,4 @@
+import { SYSTEM_PROMPT } from '@/lib/constants';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
@@ -35,10 +36,10 @@ export async function POST(req: NextRequest) {
     // You should customize this part to match the enhancement logic in your app/enhance/page.tsx
     // or other relevant parts of your frontend.
     const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo', // Consider making this configurable
+      model: 'gpt-4o', // Consider making this configurable
       messages: [
-        { role: 'system', content: 'You are a helpful assistant that enhances text.' },
-        { role: 'user', content: `Please enhance the following text: ${text}` },
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: `${text}` },
       ],
       // Add other parameters like temperature, max_tokens as needed
     });

@@ -236,7 +236,7 @@ export default function InfoPopoverDemo() {
                             <strong>GPT-4o:</strong> Most capable, best for complex tasks
                           </li>
                           <li>
-                            <strong>GPT-3.5:</strong> Faster and more cost-effective
+                            {/* <strong>GPT-3.5:</strong> Faster and more cost-effective */}
                           </li>
                         </ul>
                       </div>
@@ -247,7 +247,7 @@ export default function InfoPopoverDemo() {
                 </div>
                 <select id="model" className="w-full px-3 py-2 border rounded-md text-sm">
                   <option value="gpt-4o">GPT-4o</option>
-                  <option value="gpt-3.5">GPT-3.5 Turbo</option>
+                  {/* <option value="gpt-3.5">GPT-3.5 Turbo</option> */}
                 </select>
               </div>
             </div>
